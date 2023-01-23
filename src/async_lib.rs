@@ -89,17 +89,6 @@ pub use async_std::task::spawn_blocking;
 #[cfg(feature = "tokio")]
 pub use tokio::task::spawn_blocking;
 
-#[cfg(all(test, feature = "async-std"))]
-pub use async_std::task::block_on;
-#[cfg(all(test, feature = "tokio"))]
-#[inline]
-pub fn block_on<F, T>(future: F) -> T
-where
-    F: std::future::Future<Output = T>,
-{
-    tokio::runtime::Runtime::new().unwrap().block_on(future)
-}
-
 #[cfg(feature = "async-std")]
 pub use async_std::task::JoinHandle;
 #[cfg(feature = "async-std")]

@@ -1,6 +1,21 @@
-# Run tests with cargo nextest.
-test:
+# Run tests on both runtimes with cargo nextest.
+@test:
+    echo "----------\nasync-std:\n"
     cargo nextest run
+    echo "\n----------\ntokio:\n"
+    cargo nextest run --no-default-features --features tokio-runtime
+
+@bench:
+    echo "----------\nasync-std:\n"
+    cargo bench
+    echo "\n----------\ntokio:\n"
+    cargo bench --no-default-features --features tokio-runtime
+
+@criterion:
+    echo "----------\nasync-std:\n"
+    cargo criterion
+    echo "\n----------\ntokio:\n"
+    cargo criterion --no-default-features --features tokio-runtime
 
 # Generate a changelog with git-cliff
 @changelog TAG:
@@ -15,6 +30,7 @@ test:
     cargo install cargo-nextest
     cargo install cargo-release
     cargo install git-cliff
+    cargo install cargo-criterion
 
 # Lint and automatically fix what we can fix
 @lint:

@@ -384,6 +384,12 @@ mod tests {
     use super::*;
     use crate::async_lib::AsyncWriteExt;
     use tempfile;
+
+    #[cfg(feature = "async-std")]
+    use async_attributes::test as async_test;
+    #[cfg(feature = "tokio")]
+    use tokio::test as async_test;
+
     #[test]
     fn basic_write() {
         let tmp = tempfile::tempdir().unwrap();
@@ -398,11 +404,11 @@ mod tests {
         );
     }
 
-    #[test]
-    fn basic_async_write() {
+    #[async_test]
+    async fn basic_async_write() {
         let tmp = tempfile::tempdir().unwrap();
         let dir = tmp.path().to_owned();
-        crate::async_lib::block_on(async {
+        futures::executor::block_on(async {
             let mut writer = AsyncWriter::new(&dir, Algorithm::Sha256, None)
                 .await
                 .unwrap();
