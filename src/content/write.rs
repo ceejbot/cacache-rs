@@ -10,6 +10,7 @@ use async_std::task::{self, Context, JoinHandle, Poll};
 use futures::io::AsyncWrite;
 use futures::prelude::*;
 use memmap2::MmapMut;
+// use memmap::MmapMut;
 use ssri::{Algorithm, Integrity, IntegrityOpts};
 use tempfile::NamedTempFile;
 
